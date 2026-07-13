@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learn SQL</title>
+  <style>
+    :root { --ink:#20303c; --muted:#627180; --navy:#1d4e89; --cyan:#1e7c8a; --paper:#fffdf8; --line:#d8e0e7; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#eef3f7; color:var(--ink); font:16px/1.65 system-ui,sans-serif; }
+    .page { max-width:900px; margin:48px auto; padding:42px; background:var(--paper); border:1px solid var(--line); box-shadow:0 18px 44px rgba(28,41,52,.14); }
+    h1,h2 { color:var(--navy); line-height:1.1; }
+    h1 { margin-top:0; font-size:clamp(2.4rem,6vw,4rem); }
+    .lead { max-width:62ch; color:var(--muted); font-size:1.15rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin:28px 0; }
+    .card { display:block; padding:20px; border:1px solid var(--line); border-radius:16px; background:#fff; color:inherit; text-decoration:none; }
+    .card:hover { border-color:var(--cyan); box-shadow:0 8px 20px rgba(30,124,138,.12); }
+    .card strong { display:block; margin-bottom:6px; color:var(--navy); font-size:1.15rem; }
+    .card span { color:var(--muted); }
+    .setup { padding:18px 20px; border-left:5px solid var(--cyan); background:#eefbfc; }
+    code { padding:.1em .3em; border-radius:4px; background:#e8eef2; }
+    pre { overflow:auto; padding:14px 16px; border-radius:10px; background:#17212b; color:#f5f8fa; }
+    @media (max-width:700px) { .page { margin:20px 12px; padding:26px 20px; } }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <p>LEARN SQL · START HERE</p>
+    <h1>Learn SQL</h1>
+    <p class="lead">A practical route from your first <code>SELECT</code> query to joins, summaries, subqueries, and controlled table changes.</p>
+
+    <section class="grid" aria-label="Course starting points">
+      <a class="card" href="guide/html/SQLBolt%20Compressed%20Map.html"><strong>Learner's Guide</strong><span>See the whole course route and choose your next chapter.</span></a>
+      <a class="card" href="guide/html/chapters/1-reading-one-table.html"><strong>Start Chapter 1</strong><span>Begin with reading one table and choosing columns.</span></a>
+      <a class="card" href="exercises/html/Football%20SQL%20Practice%20Lab.html"><strong>Practice Labs</strong><span>Repeat the ideas with small, visible datasets.</span></a>
+      <a class="card" href="exercises/html/Coffee%20Python%20SQL%20Bridge%20Prototype.html"><strong>Python to SQL Bridge</strong><span>Shape a CSV in Python, then ask SQL questions of it.</span></a>
+    </section>
+
+    <section class="setup">
+      <h2>Using a downloaded copy</h2>
+      <p>Keep the project folders together. To use the bundled CSV with the bridge, run this from the project folder:</p>
+      <pre>python3 -m http.server 8000</pre>
+      <p>Then open <a href="http://localhost:8000/">http://localhost:8000/</a>. Stop the server with <code>Ctrl+C</code>.</p>
+    </section>
+  </main>
+  <script src="shared/site-nav.js"></script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Travel Lab Cheat Sheet</title>
+<style>
+:root {
+  --bg:#eef3f7;
+  --ink:#163247;
+  --muted:#5f7484;
+  --line:#d6e0e8;
+  --navy:#1f4f73;
+  --soft-navy:#e8f1f8;
+  --cyan:#4da7d8;
+  --amber:#d79a2b;
+  --green:#3e8b63;
+  --question-bg:#f8fbfd;
+  --code-ink:#214f72;
+  --code-keyword:#1b5f8f;
+  --code-symbol:#8c5a12;
+  --code-table:#2f7a57;
+  --page:#ffffff;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:
+    radial-gradient(circle at top left, rgba(77,167,216,.18), transparent 28%),
+    linear-gradient(180deg, #f3f7fa 0%, #eaf0f4 100%);
+  color:var(--ink);
+  font:16px/1.65 "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+}
+.sheet {
+  width:min(980px, calc(100% - 32px));
+  margin:32px auto;
+  background:var(--page);
+  border:1px solid var(--line);
+  border-radius:24px;
+  overflow:hidden;
+  box-shadow:0 24px 60px rgba(19, 39, 56, .10);
+}
+.hero {
+  padding:32px 32px 24px;
+  background:linear-gradient(135deg, #1f4f73 0%, #2f6e95 100%);
+  color:#fff;
+}
+.eyebrow {
+  display:inline-block;
+  margin-bottom:10px;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,255,255,.14);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+h1 {
+  margin:0 0 10px;
+  font-size:clamp(32px, 4vw, 44px);
+  line-height:1.1;
+}
+.hero p {
+  margin:0;
+  max-width:760px;
+  color:rgba(255,255,255,.88);
+}
+.section {
+  padding:28px 32px 32px;
+}
+.section + .section {
+  border-top:1px solid var(--line);
+}
+.section-head {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin-bottom:18px;
+}
+.section-head h2 {
+  margin:0;
+  font-size:24px;
+  color:var(--navy);
+}
+.rule {
+  flex:1;
+  height:1px;
+  background:var(--line);
+}
+.prompt-list {
+  display:grid;
+  gap:18px;
+}
+.prompt-card {
+  border:1px solid var(--line);
+  border-radius:20px;
+  overflow:hidden;
+  background:#fff;
+}
+.prompt-card.subquery { border-top:6px solid var(--cyan); }
+.prompt-card.group { border-top:6px solid var(--amber); }
+.prompt-card.union { border-top:6px solid var(--green); }
+.prompt-label {
+  display:block;
+  padding:16px 20px 0;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+.qa {
+  padding:18px 20px 22px;
+  border-top:1px solid var(--line);
+}
+.question {
+  margin:0 0 12px;
+  padding:14px 16px;
+  border-radius:16px;
+  background:var(--question-bg);
+  color:var(--navy);
+  border:1px solid #dce8f0;
+  font-weight:700;
+}
+.answer {
+  margin:0;
+  padding:2px 0 0;
+  color:var(--code-ink);
+}
+.code-line {
+  font:700 15px/1.8 "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+.kw { color:var(--code-keyword); }
+.sym { color:var(--code-symbol); }
+.table-name { color:var(--code-table); }
+.field-name { color:var(--ink); }
+.string { color:#8a2230; }
+.number { color:#7a4f00; }
+.operator { color:#6a4fb3; }
+.clause {
+  color:var(--code-keyword);
+  font-weight:700;
+}
+.footer {
+  padding:0 32px 32px;
+  color:var(--muted);
+  font-size:14px;
+}
+@media (max-width: 700px) {
+  .sheet { width:min(100%, calc(100% - 20px)); margin:10px auto; border-radius:18px; }
+  .hero, .section, .footer { padding-left:18px; padding-right:18px; }
+}
+</style>
+</head>
+<body>
+  <article class="sheet">
+    <header class="hero">
+      <div class="eyebrow">Cheat Sheet</div>
+      <h1>Travel Lab Cheat Sheet</h1>
+      <p>Clear question-and-answer answers for every practice prompt in the Travel SQL lab.</p>
+    </header>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Precision First</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="prompt-card subquery">
+        <span class="prompt-label">Good Habit</span>
+        <div class="qa">
+          <p class="question">Q - What is the better default habit when I write a query?</p>
+          <div class="answer">
+            <div class="code-line">Use <span class="kw">SELECT</span> with named columns by default. Keep <span class="kw">SELECT</span> <span class="sym">*</span> for prompts that explicitly ask for every column, or for quick table checks while practising.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Subqueries</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="prompt-list">
+        <div class="prompt-card subquery">
+          <span class="prompt-label">Subqueries</span>
+          <div class="qa">
+            <p class="question">Q - Find trips with a package cost above the overall average.</p>
+            <div class="answer">
+              <div class="code-line"><span class="kw">SELECT</span> <span class="field-name">traveller_name</span><span class="sym">,</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="field-name">package_cost</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">WHERE</span> <span class="field-name">package_cost</span> <span class="operator">&gt;</span> <span class="sym">(</span><span class="kw">SELECT</span> <span class="kw">AVG</span><span class="sym">(</span><span class="field-name">package_cost</span><span class="sym">)</span> <span class="kw">FROM</span> <span class="table-name">trips</span><span class="sym">)</span><span class="sym">;</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-card subquery">
+          <span class="prompt-label">Subqueries</span>
+          <div class="qa">
+            <p class="question">Q - Find trips with more nights than the average trip.</p>
+            <div class="answer">
+              <div class="code-line"><span class="kw">SELECT</span> <span class="field-name">traveller_name</span><span class="sym">,</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="field-name">nights</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">WHERE</span> <span class="field-name">nights</span> <span class="operator">&gt;</span> <span class="sym">(</span><span class="kw">SELECT</span> <span class="kw">AVG</span><span class="sym">(</span><span class="field-name">nights</span><span class="sym">)</span> <span class="kw">FROM</span> <span class="table-name">trips</span><span class="sym">)</span><span class="sym">;</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-card subquery">
+          <span class="prompt-label">Subqueries</span>
+          <div class="qa">
+            <p class="question">Q - Find trips whose review score is below the table average.</p>
+            <div class="answer">
+              <div class="code-line"><span class="kw">SELECT</span> <span class="field-name">traveller_name</span><span class="sym">,</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="field-name">review_score</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">WHERE</span> <span class="field-name">review_score</span> <span class="operator">&lt;</span> <span class="sym">(</span><span class="kw">SELECT</span> <span class="kw">AVG</span><span class="sym">(</span><span class="field-name">review_score</span><span class="sym">)</span> <span class="kw">FROM</span> <span class="table-name">trips</span><span class="sym">)</span><span class="sym">;</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Grouped Thinking</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="prompt-list">
+        <div class="prompt-card group">
+          <span class="prompt-label">Grouped Thinking</span>
+          <div class="qa">
+            <p class="question">Q - Display travel_style and average package cost by travel style. Name the average column average_package_cost.</p>
+            <div class="answer">
+              <div class="code-line"><span class="kw">SELECT</span> <span class="field-name">travel_style</span><span class="sym">,</span> <span class="kw">AVG</span><span class="sym">(</span><span class="field-name">package_cost</span><span class="sym">)</span> <span class="kw">AS</span> <span class="field-name">average_package_cost</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">GROUP BY</span> <span class="field-name">travel_style</span><span class="sym">;</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-card group">
+          <span class="prompt-label">Grouped Thinking</span>
+          <div class="qa">
+            <p class="question">Q - Display destination and average review score. Name the average column average_review_score, and show only destinations above 8.5.</p>
+            <div class="answer">
+              <div class="code-line"><span class="kw">SELECT</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="kw">AVG</span><span class="sym">(</span><span class="field-name">review_score</span><span class="sym">)</span> <span class="kw">AS</span> <span class="field-name">average_review_score</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">GROUP BY</span> <span class="field-name">destination</span> <span class="kw">HAVING</span> <span class="kw">AVG</span><span class="sym">(</span><span class="field-name">review_score</span><span class="sym">)</span> <span class="operator">&gt;</span> <span class="number">8.5</span><span class="sym">;</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-card group">
+          <span class="prompt-label">Grouped Thinking</span>
+          <div class="qa">
+            <p class="question">Q - Display booking_channel and total traveller count. Name the total column total_travellers, and show only booking channels above 8.</p>
+            <div class="answer">
+              <div class="code-line"><span class="kw">SELECT</span> <span class="field-name">booking_channel</span><span class="sym">,</span> <span class="kw">SUM</span><span class="sym">(</span><span class="field-name">travellers</span><span class="sym">)</span> <span class="kw">AS</span> <span class="field-name">total_travellers</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">GROUP BY</span> <span class="field-name">booking_channel</span> <span class="kw">HAVING</span> <span class="kw">SUM</span><span class="sym">(</span><span class="field-name">travellers</span><span class="sym">)</span> <span class="operator">&gt;</span> <span class="number">8</span><span class="sym">;</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Logical Query Order</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="prompt-list">
+        <div class="prompt-card group"><span class="prompt-label">Where, Group By, Order By</span><div class="qa">
+          <p class="question">Q - First keep only Winter trips. Then display booking_channel and the sum of travellers, named total_travellers. Group by channel and sort the totals highest first.</p>
+          <div class="answer"><div class="code-line"><span class="kw">SELECT</span> booking_channel, <span class="kw">SUM</span>(travellers) <span class="kw">AS</span> total_travellers <span class="kw">FROM</span> trips <span class="kw">WHERE</span> season = <span class="string">'Winter'</span> <span class="kw">GROUP BY</span> booking_channel <span class="kw">ORDER BY</span> total_travellers <span class="kw">DESC</span>;</div></div>
+        </div></div>
+        <div class="prompt-card group"><span class="prompt-label">Where, Group By, Having, Order By</span><div class="qa">
+          <p class="question">Q - First keep only Website bookings. Then display travel_style and average package cost, named average_package_cost. Keep only averages above 500, then sort highest first.</p>
+          <div class="answer"><div class="code-line"><span class="kw">SELECT</span> travel_style, <span class="kw">AVG</span>(package_cost) <span class="kw">AS</span> average_package_cost <span class="kw">FROM</span> trips <span class="kw">WHERE</span> booking_channel = <span class="string">'Website'</span> <span class="kw">GROUP BY</span> travel_style <span class="kw">HAVING</span> <span class="kw">AVG</span>(package_cost) &gt; 500 <span class="kw">ORDER BY</span> average_package_cost <span class="kw">DESC</span>;</div></div>
+        </div></div>
+        <div class="prompt-card group"><span class="prompt-label">Full Order With Limit</span><div class="qa">
+          <p class="question">Q - Keep trips with review scores of at least 8. Display destination and total travellers, named total_travellers. Keep totals of at least 2, sort totals high to low then destination A–Z, and return the first 3 groups.</p>
+          <div class="answer"><div class="code-line"><span class="kw">SELECT</span> destination, <span class="kw">SUM</span>(travellers) <span class="kw">AS</span> total_travellers <span class="kw">FROM</span> trips <span class="kw">WHERE</span> review_score &gt;= 8 <span class="kw">GROUP BY</span> destination <span class="kw">HAVING</span> <span class="kw">SUM</span>(travellers) &gt;= 2 <span class="kw">ORDER BY</span> total_travellers <span class="kw">DESC</span>, destination <span class="kw">ASC</span> <span class="kw">LIMIT</span> 3;</div></div>
+        </div></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>Union</h2>
+        <div class="rule"></div>
+      </div>
+      <div class="prompt-list">
+        <div class="prompt-card union">
+          <span class="prompt-label">Union</span>
+          <div class="qa">
+            <p class="question">Q - Return all winter trips and all luxury trips using UNION.</p>
+            <div class="answer">
+              <div class="code-line"><span class="kw">SELECT</span> <span class="field-name">traveller_name</span><span class="sym">,</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="field-name">season</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">WHERE</span> <span class="field-name">season</span> <span class="operator">=</span> <span class="string">'Winter'</span> <span class="kw">UNION</span> <span class="kw">SELECT</span> <span class="field-name">traveller_name</span><span class="sym">,</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="field-name">season</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">WHERE</span> <span class="field-name">travel_style</span> <span class="operator">=</span> <span class="string">'Luxury'</span><span class="sym">;</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-card union">
+          <span class="prompt-label">Union</span>
+          <div class="qa">
+            <p class="question">Q - Return all trips to Rome and all trips booked through agents.</p>
+            <div class="answer">
+              <div class="code-line"><span class="kw">SELECT</span> <span class="field-name">traveller_name</span><span class="sym">,</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="field-name">booking_channel</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">WHERE</span> <span class="field-name">destination</span> <span class="operator">=</span> <span class="string">'Rome'</span> <span class="kw">UNION</span> <span class="kw">SELECT</span> <span class="field-name">traveller_name</span><span class="sym">,</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="field-name">booking_channel</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">WHERE</span> <span class="field-name">booking_channel</span> <span class="operator">=</span> <span class="string">'Agent'</span><span class="sym">;</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="prompt-card union">
+          <span class="prompt-label">Union</span>
+          <div class="qa">
+            <p class="question">Q - Try the same query with UNION ALL.</p>
+            <div class="answer">
+              <div class="code-line"><span class="kw">SELECT</span> <span class="field-name">traveller_name</span><span class="sym">,</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="field-name">season</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">WHERE</span> <span class="field-name">season</span> <span class="operator">=</span> <span class="string">'Winter'</span> <span class="kw">UNION ALL</span> <span class="kw">SELECT</span> <span class="field-name">traveller_name</span><span class="sym">,</span> <span class="field-name">destination</span><span class="sym">,</span> <span class="field-name">season</span> <span class="kw">FROM</span> <span class="table-name">trips</span> <span class="kw">WHERE</span> <span class="field-name">travel_style</span> <span class="operator">=</span> <span class="string">'Luxury'</span><span class="sym">;</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Built from the Travel SQL Practice Lab prompts so the questions and answers stay on one clean page.
+    </div>
+  </article>
+</body>
+</html>

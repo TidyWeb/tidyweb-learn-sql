@@ -1,0 +1,14 @@
+# Internal project material, working notes, and retained history.
+/.Codex/
+/.memsearch/
+/.playwright-cli/
+/backups/
+/archive/
+/docs/
+/plans/
+/output/
+
+# Source notes and old page copies are not needed by learners.
+/guide/markdown/
+/guide/html/chapters/backups/
+*.bak-*

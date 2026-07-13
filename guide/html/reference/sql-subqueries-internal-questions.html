@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SQL Subqueries: A Question Inside a Question</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#172b36;--muted:#63727a;--paper:#fffdf7;--mist:#e8f0ed;--line:#d7e1dc;--navy:#173f4b;--teal:#177c78;--coral:#dc6d4e;--yellow:#f3c969;--blue:#dcecf0;--mint:#e2f2e9;--rose:#f8e5dd;--lav:#e8e5f3;--mono:'IBM Plex Mono',ui-monospace,monospace;--body:'IBM Plex Sans',system-ui,sans-serif;--display:'Atkinson Hyperlegible',system-ui,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(circle at 8% 10%,rgba(243,201,105,.28),transparent 23rem),radial-gradient(circle at 92% 28%,rgba(23,124,120,.13),transparent 28rem),var(--mist);color:var(--ink);font-family:var(--body)}
+.sheet{max-width:1180px;margin:28px auto 56px;padding:34px 38px 32px;background:var(--paper);border:1px solid rgba(23,63,75,.16);box-shadow:0 24px 60px rgba(23,63,75,.16);position:relative;overflow:hidden}
+.sheet:before{content:"";position:absolute;inset:0 0 auto;height:8px;background:linear-gradient(90deg,var(--coral) 0 21%,var(--yellow) 21% 45%,var(--teal) 45% 75%,var(--navy) 75%)}
+.kicker{margin:4px 0 8px;color:var(--coral);font:600 12px/1.2 var(--mono);letter-spacing:.14em;text-transform:uppercase}
+h1,h2,h3,p{margin-top:0}
+h1{margin-bottom:12px;color:var(--navy);font:700 clamp(35px,5vw,60px)/.95 var(--display);letter-spacing:-.04em}
+.dek{max-width:820px;margin-bottom:25px;color:var(--muted);font-size:17px;line-height:1.55}
+.section-label{display:flex;align-items:center;gap:10px;margin:25px 0 12px;color:var(--navy);font:700 15px/1.2 var(--mono);letter-spacing:.04em;text-transform:uppercase}
+.section-label:after{content:"";height:1px;flex:1;background:var(--line)}
+code,pre,.shape{font-family:var(--mono)}
+code{font-size:.92em;color:var(--navy)}
+pre code{color:inherit}
+.grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+.card{border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden}
+.head{padding:14px 18px;color:#fff;background:var(--navy)}
+.head.teal{background:var(--teal)}
+.head h2{margin:0 0 4px;font:700 23px/1.05 var(--display)}
+.head p{margin:0;color:rgba(255,255,255,.78);font-size:13px;line-height:1.35}
+.pad{padding:18px}
+.nesting{padding:18px 18px 18px 28px;background:var(--blue);border-left:6px solid var(--teal);position:relative}
+.nesting:before{content:"";position:absolute;left:12px;top:18px;bottom:18px;width:2px;background:var(--coral)}
+.nesting p{margin:0 0 10px;color:var(--muted);font-size:14px;line-height:1.45}
+.nesting p:last-child{margin-bottom:0}
+.nesting strong{color:var(--navy)}
+.nesting .shape{font-size:17px;color:var(--navy);font-weight:600}
+.steps{display:grid;gap:8px;height:100%}
+.step{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:13px 14px;border-radius:13px;background:var(--mint);border:1px solid rgba(23,63,75,.1)}
+.step:nth-child(2){background:#fff3d5}.step:nth-child(3){background:var(--rose)}
+.step b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--navy);color:#fff;font:600 13px var(--mono)}
+.step strong{display:block;color:var(--navy);font-size:14px}.step span{display:block;margin-top:3px;color:var(--muted);font-size:12px;line-height:1.3}
+.code-card{border-radius:18px;overflow:hidden;background:#101a22;color:#e8eef4;box-shadow:0 12px 26px rgba(16,26,34,.18)}
+.code-top{display:flex;justify-content:space-between;gap:12px;padding:12px 17px;background:#172a35;color:#9fc6c5;font:600 11px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.code-top span:last-child{color:var(--yellow)}
+pre{margin:0;padding:20px 22px 22px;overflow:auto;color:#e8eef4;font-size:14px;line-height:1.7}
+pre .outer{color:#b8e0dd}pre .inner{color:#ffd58a}
+.explain{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px}
+.explain article{padding:18px;border:1px solid var(--line);border-radius:16px;background:#fff}
+.explain article:first-child{border-top:5px solid var(--yellow)}.explain article:last-child{border-top:5px solid var(--teal)}
+.explain h3{margin:0 0 8px;color:var(--navy);font:700 21px/1.1 var(--display)}
+.explain p{margin:0;color:var(--muted);font-size:14px;line-height:1.5}
+.shape-strip{display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:center;margin-top:16px;padding:16px;border-radius:16px;background:var(--lav);border:1px solid rgba(23,63,75,.1)}
+.shape-strip .shape{display:block;color:var(--navy);font-size:15px;font-weight:600;text-align:center}.arrow{color:var(--coral);font:700 24px var(--mono)}
+.anatomy{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.anatomy article{padding:16px;border-radius:15px;border:1px solid var(--line);background:var(--blue)}
+.anatomy article:nth-child(2){background:var(--mint)}.anatomy article:nth-child(3){background:var(--rose)}
+.anatomy h3{margin:0 0 8px;color:var(--navy);font:700 19px/1.05 var(--display)}.anatomy p{margin:0;color:var(--muted);font-size:13px;line-height:1.4}
+.patterns{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pattern{padding:18px;border-radius:16px;border:1px solid var(--line);background:#fff}.pattern h3{margin:0 0 8px;color:var(--navy);font:700 20px/1.1 var(--display)}.pattern p{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.45}.pattern pre{padding:13px 14px;border-radius:11px;background:#101a22;font-size:12px;line-height:1.5}
+.checks{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.check{padding:14px;border-radius:14px;background:var(--navy);color:#fff}.check:nth-child(2){background:#225d68}.check:nth-child(3){background:var(--teal)}.check:nth-child(4){background:#bc654d}.check:nth-child(5){background:#d49b32;color:var(--ink)}.check:nth-child(6){background:#52677a}.check strong{display:block;margin-bottom:5px;font:600 13px var(--mono)}.check span{display:block;color:rgba(255,255,255,.78);font-size:12px;line-height:1.35}.check:nth-child(5) span{color:rgba(23,43,54,.72)}
+.tip{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start;margin-top:18px;padding:15px 17px;border-left:5px solid var(--coral);background:#fff5e9}.tip strong{color:var(--navy);font-size:14px}.tip p{margin:0;color:#5c5c57;font-size:13px;line-height:1.45}
+.foot{display:flex;justify-content:space-between;gap:18px;margin-top:18px;color:#7a8788;font:11px/1.4 var(--mono)}
+@media(max-width:900px){.sheet{margin:0;padding:28px 22px 26px;border-width:0;box-shadow:none}.grid,.explain,.patterns{grid-template-columns:1fr}}
+@media(max-width:620px){.anatomy,.checks{grid-template-columns:1fr 1fr}.shape-strip{grid-template-columns:1fr}.arrow{transform:rotate(90deg);text-align:center}.foot{display:block}}
+@media print{@page{size:A4 landscape;margin:9mm}body{background:#fff}.sheet{max-width:none;margin:0;padding:20px 24px 18px;border:0;box-shadow:none}.sheet:before{display:none}h1{font-size:38px}.dek{font-size:13px;margin-bottom:14px}.section-label{margin-top:13px}.head{padding:10px 14px}.pad{padding:12px}.nesting{padding:12px 14px 12px 23px}.step{padding:8px 10px}.code-card pre{padding:12px 14px;font-size:11px;line-height:1.4}.explain article,.pattern,.anatomy article{padding:11px}.explain p,.pattern p,.anatomy p{font-size:11px}.shape-strip{padding:10px;margin-top:9px}.check{padding:9px}.tip{margin-top:10px;padding:9px 12px}.foot{margin-top:9px}}
+</style>
+</head>
+<body>
+<main class="sheet">
+  <p class="kicker">SQLZoo field guide · nesting made visible</p>
+  <h1>A question<br>inside a question</h1>
+  <p class="dek">A subquery is a complete SQL question placed inside another SQL question. Read the inside first, then let its result answer the comparison in the outer query.</p>
+
+  <section class="grid" aria-label="Subquery orientation">
+    <article class="card">
+      <header class="head"><h2>The key idea</h2><p>Parentheses show where the supporting question begins and ends.</p></header>
+      <div class="pad"><div class="nesting">
+        <p><strong>OUTER QUERY</strong> asks the main question.</p>
+        <p class="shape">main value &gt; ( INNER QUERY )</p>
+        <p><strong>INNER QUERY</strong> supplies the value or list the outer query needs.</p>
+      </div></div>
+    </article>
+    <article class="card">
+      <header class="head teal"><h2>Read it inside out</h2><p>Each layer remains a complete query.</p></header>
+      <div class="pad steps">
+        <div class="step"><b>1</b><div><strong>Find the benchmark</strong><span>The inner question returns a result.</span></div></div>
+        <div class="step"><b>2</b><div><strong>Compare each row</strong><span>The outer question uses that result.</span></div></div>
+        <div class="step"><b>3</b><div><strong>Keep the match</strong><span>The final result answers the main question.</span></div></div>
+      </div>
+    </article>
+  </section>
+
+  <p class="section-label">01 · The world example</p>
+  <section class="code-card" aria-label="World GDP per capita subquery example">
+    <div class="code-top"><span>Outer query + inner query</span><span>one number returned inside</span></div>
+    <pre><code><span class="outer">SELECT name</span>
+<span class="outer">FROM world</span>
+<span class="outer">WHERE continent = 'Europe'</span>
+<span class="outer">  AND gdp / population &gt; (</span>
+<span class="inner">      SELECT gdp / population</span>
+<span class="inner">      FROM world</span>
+<span class="inner">      WHERE name = 'United Kingdom'</span>
+<span class="outer">  );</span></code></pre>
+  </section>
+
+  <section class="explain" aria-label="Outer and inner query explanation">
+    <article><h3>Inside: the benchmark</h3><p>The inner query finds the United Kingdom row and calculates its <code>gdp / population</code>. It returns one number: the UK’s per-capita GDP.</p></article>
+    <article><h3>Outside: the main question</h3><p>The outer query keeps European countries whose own <code>gdp / population</code> is greater than that returned number.</p></article>
+  </section>
+
+  <div class="shape-strip" aria-label="Subquery shape"><span class="shape">current country's gdp / population</span><span class="arrow">&gt;</span><span class="shape">( United Kingdom's gdp / population )</span></div>
+
+  <p class="section-label">02 · Why SELECT, FROM, WHERE appear twice</p>
+  <section class="anatomy" aria-label="Repeated SQL clauses">
+    <article><h3>SELECT</h3><p>Each query decides what its own question should return.</p></article>
+    <article><h3>FROM</h3><p>Each query names the table it is reading. The same table can be used again.</p></article>
+    <article><h3>WHERE</h3><p>Each query can filter its own rows. The inner filter identifies the UK.</p></article>
+  </section>
+
+  <p class="section-label">03 · Parentheses hold different things</p>
+  <section class="patterns" aria-label="Scalar and list subqueries">
+    <article class="pattern"><h3>One returned value</h3><p>Use a subquery inside a comparison when it returns one number or one value.</p><pre><code>gdp / population &gt; (
+    SELECT gdp / population
+    ...
+)</code></pre></article>
+    <article class="pattern"><h3>A returned list</h3><p>Use a subquery with <code>IN</code> or <code>NOT IN</code> when it returns several values.</p><pre><code>yr NOT IN (
+    SELECT yr
+    FROM nobel
+    ...
+)</code></pre></article>
+  </section>
+
+  <p class="section-label">04 · Build it without getting jammed</p>
+  <section class="checks" aria-label="Subquery construction checklist">
+    <div class="check"><strong>1 · Outer question</strong><span>Write what the final result should show.</span></div>
+    <div class="check"><strong>2 · Needed result</strong><span>Ask what value or list the outer query needs.</span></div>
+    <div class="check"><strong>3 · Inner query</strong><span>Write a complete SELECT, FROM, WHERE question.</span></div>
+    <div class="check"><strong>4 · Parentheses</strong><span>Put the complete inner query inside them.</span></div>
+    <div class="check"><strong>5 · Type check</strong><span>Make sure it returns a number, text value, or list.</span></div>
+    <div class="check"><strong>6 · Read inside out</strong><span>Test the inner question mentally before the outer one.</span></div>
+  </section>
+
+  <aside class="tip"><strong>Remember</strong><p>Line breaks are not required, but they make nesting visible. More levels are possible, yet one clear supporting question at a time is the easiest way to understand the result.</p></aside>
+  <footer class="foot"><span>Outer query = main question · inner query = supporting question</span><span>Values connect the questions; parentheses show the boundary.</span></footer>
+</main>
+<script src="../../../shared/site-nav.js"></script>
+</body>
+</html>
