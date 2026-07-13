@@ -4,6 +4,10 @@ This is a browser-based practice course for learning SQL from first queries
 through joins, summaries, subqueries, and controlled table changes. It also
 includes a small Python-to-SQL bridge.
 
+This is Book 2 of the learning route. Start with
+[Book 1, Learn Python Data Preparation](https://tidyweb.github.io/tidyweb-learn-python-data-preparation/)
+if you first need to learn how to prepare a clean table for SQL.
+
 ## Start here
 
 Open [`index.html`](index.html), then choose **Learner's Guide**. The guide
@@ -25,7 +29,9 @@ You can also open the guide directly:
 
 Keep the folder structure together, including `datasets/`. The normal guide
 pages can be read as local files, but the Python-to-SQL bridge loads its
-bundled CSV through the browser and works best from a small local server.
+bundled CSV through the browser and works best from a small local server. The
+bridge also needs an internet connection to load its in-browser Python and SQL
+engines.
 
 From the project folder, run:
 
