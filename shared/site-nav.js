@@ -4,7 +4,14 @@
   const root = projectRoot.href.replace(/\/$/, "");
   const guideHome = `${root}/guide/html/SQLBolt%20Compressed%20Map.html`;
   const logoSrc = `${root}/guide/html/assets/tidyweb_logo.png`;
+  const pythonCourse = "https://tidyweb.github.io/tidyweb-learn-python-data-preparation/";
   const groups = [
+    {
+      title: "Book 1",
+      links: [
+        { label: "Learn Python Data Preparation", href: pythonCourse }
+      ]
+    },
     {
       title: "Guide",
       links: [
