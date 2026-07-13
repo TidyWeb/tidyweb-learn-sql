@@ -7,12 +7,6 @@
   const pythonCourse = "https://tidyweb.github.io/tidyweb-learn-python-data-preparation/";
   const groups = [
     {
-      title: "Book 1",
-      links: [
-        { label: "Learn Python Data Preparation", href: pythonCourse }
-      ]
-    },
-    {
       title: "Guide",
       links: [
         { label: "Learner's Guide", href: guideHome }
@@ -64,6 +58,12 @@
       title: "Python To SQL Bridge",
       links: [
         { label: "Coffee Python SQL Bridge", href: `${root}/exercises/html/Coffee%20Python%20SQL%20Bridge%20Prototype.html` }
+      ]
+    },
+    {
+      title: "Book 1",
+      links: [
+        { label: "Learn Python Data Preparation", href: pythonCourse }
       ]
     }
   ];
