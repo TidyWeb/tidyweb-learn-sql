@@ -1,6 +1,6 @@
 # Learn SQL
 
-## [🌐 Open the live site: https://tidyweb.github.io/tidyweb-learn-sql/ ↗](https://tidyweb.github.io/tidyweb-learn-sql/)
+### [Visit the live site ↗](https://tidyweb.github.io/tidyweb-learn-sql/)
 
 
 This is a browser-based practice course for learning SQL from first queries through joins, summaries, subqueries, and controlled table changes. It also includes a small Python-to-SQL bridge.
